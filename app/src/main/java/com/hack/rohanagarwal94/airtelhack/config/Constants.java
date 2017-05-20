@@ -20,7 +20,7 @@ public class Constants {
     public static final Map<Integer, Integer> imageDrawable = new HashMap<Integer, Integer>() {{
         put(1, R.drawable.smartphone);
         put(2, R.drawable.fire);
-        put(3, R.drawable.flash);
+        put(0, R.drawable.flash);
     }};
 
     private Constants() {

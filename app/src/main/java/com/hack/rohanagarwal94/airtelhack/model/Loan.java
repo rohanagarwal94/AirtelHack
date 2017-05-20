@@ -15,10 +15,15 @@ public class Loan {
     private float amountLeft;
     private ArrayList<Creditor> creditors;
 
-    public Loan(String name, String title, int type, float amountTotal){
+    public Loan(){
+
+    }
+
+    public Loan(String name, String title, int type, float amountTotal, float amountLeft){
         this.name = name;
         this.title = title;
         this.type = type;
+        this.amountLeft=amountLeft;
         this.amountTotal = amountTotal;
     }
 

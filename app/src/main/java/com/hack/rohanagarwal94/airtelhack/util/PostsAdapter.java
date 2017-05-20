@@ -6,6 +6,7 @@ package com.hack.rohanagarwal94.airtelhack.util;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
 
         final Loan item=feedItems.get(position);
 
+        Log.i("PostsAdapter",item.getName());
         String name = item.getName();
         String title = item.getTitle();
         float amount = item.getAmountLeft();
