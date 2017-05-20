@@ -9,6 +9,9 @@ public class Constants {
     public static final String DEST_ACC2 = "4444777755550091";
     public static final String DEST_ACC3 = "4444777755550092";
     public static final String BASE_URL = "https://retailbanking.mybluemix.net/banking/icicibank/";
+    public static final int MOBILE_BILL = 1;
+    public static final int ELECTRICITY_BILL = 3;
+    public static final int GAS_BILL = 2;
 
     private Constants() {
 	}

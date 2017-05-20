@@ -7,9 +7,20 @@ import java.util.ArrayList;
  */
 
 public class Loan {
+    String title;
+    int type;
+    String name;
+
     private float amountTotal;
     private float amountLeft;
     private ArrayList<Creditor> creditors;
+
+    Loan(String name, String title, int type, float amountTotal){
+        this.name = name;
+        this.title = title;
+        this.type = type;
+        this.amountTotal = amountTotal;
+    }
 
     public ArrayList<Creditor> getCreditors() {
         return creditors;
@@ -27,11 +38,35 @@ public class Loan {
         this.amountTotal = amountTotal;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public float getAmountLeft() {
         return amountLeft;
     }
 
     public void setAmountLeft(float amountLeft) {
         this.amountLeft = amountLeft;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
