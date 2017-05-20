@@ -3,11 +3,19 @@ package com.hack.rohanagarwal94.airtelhack.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.model.User;
 
 /**
  * Created by viveksb007 on 12/4/17.
@@ -41,6 +49,31 @@ public class MyAccountFragment extends Fragment {
             "product_category":"Liabilities"}
             ]
             */
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        User user = new User();
+        user.setName("Rishabh");
+        user.setFirebaseID(FirebaseInstanceId.getInstance().getToken());
+        user.setWalletAmount(100);
+        user.setLoans(null);
+        myRef.child("8375089216").setValue(user);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                //String value = dataSnapshot.getValue(String.class);
+                Log.d("MyAccountFragment", "Value is: " );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("MyAccountFragment", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
 

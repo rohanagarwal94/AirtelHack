@@ -14,10 +14,24 @@
         android:layout_marginTop="8dp">
 
         <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Title"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <EditText
             android:id="@+id/et_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Mobile Number"
+            android:hint="Enter Amount"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
@@ -31,7 +45,7 @@
             android:id="@+id/et_account_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Account Number"
+            android:hint="Enter Description"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
@@ -42,5 +56,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:text="Add Recipient" />
+
 
 </LinearLayout>
