@@ -26,7 +26,7 @@ public class ReceivedRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.receive_request_fragment, container, false);
         seekBar = (HoloCircleSeekBar) v.findViewById(R.id.picker);
-        name = (TextView)v.findViewById(R.id.)
+        name = (TextView)v.findViewById(R.id.name1);
         seekBar.getValue();
         return v;
     }
