@@ -8,11 +8,11 @@
     android:layout_marginTop="10dp">
 
     <TextView
-        android:text="Savings Account"
+        android:text="Airtel Wallet"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center_horizontal"
-        android:id="@+id/tv_account_type"
+        android:id="@+id/tv_airtel_wallet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -27,7 +27,7 @@
             android:text="Name : "/>
         <TextView
             android:layout_marginLeft="5dp"
-            android:text="Deadpool"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -40,26 +40,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Account Balance : "/>
+            android:text="Wallet Balance : "/>
         <TextView
             android:layout_marginLeft="5dp"
-            android:text="$ 20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Account Number : "/>
-        <TextView
-            android:layout_marginLeft="5dp"
-            android:text="*******"
+            android:id="@+id/tv_wallet_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -75,7 +59,7 @@
             android:text="Phone Number : "/>
         <TextView
             android:layout_marginLeft="5dp"
-            android:text="*****"
+            android:id="@+id/tv_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -56,7 +56,7 @@ public class SuggestionViewManager extends GestureDetector.SimpleOnGestureListen
 
         String keyword = "airtel pay 20 971149911400";
 
-//        keyword = "airtel\\spay\\s\\d+\\s\\d{16}";
+        keyword = "airtel\\spay\\s\\d+\\s\\d{16}";
 
         String accoutNoexp = "airtel\\spay\\s\\d+\\s\\d{16,22}";  // assuming account no. is between 16-22 digits
 

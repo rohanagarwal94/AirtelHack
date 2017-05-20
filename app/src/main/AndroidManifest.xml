@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+
+        <activity android:name=".activity.SignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +34,9 @@
         <activity android:name=".util.ContactPickerMulti">
 
         </activity>
+
+        <activity android:name=".activity.MainActivity" />
+
         <service
             android:name=".service.SuggestionService"
             android:label="@string/accessibility_app_name"
