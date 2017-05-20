@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_url" translatable="false" />
+    <string name="image_link" translatable="false"/>
+    <string name="disable_suggestion" translatable="false" />
+    <string name="image_unique_id" translatable="false"/>
+    <string name="video_url" translatable="false"/>
+    <string name="category_title" translatable="false"/>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InstagramTagCategoryView">
+        <attr name="category_title" format="string" />
+    </declare-styleable>
+    <declare-styleable name="TextView">
+        <attr name="typeface" format="string" />
+        <attr name="max" format="integer"/>
+    </declare-styleable>
+</resources>

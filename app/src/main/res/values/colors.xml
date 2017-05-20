@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorText">#ffffff</color>
+    <color name="tag_checked">#ffffff</color>
+    <color name="tag_unchecked">#ffc0c0c0</color>
+    <color name="scroll_color">#07bbec</color>
+    <color name="share_tut_background">#80000000</color>
+    <color name="image_border">#7D857E</color>
+    <color name="seperator_color">#e6e6e6</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">AirtelHack</string>
+    <string name="magic_assistant">AirtelHack</string>
+    <string name="service_description">Turn ON the switch on top right. That will help us clean your phone better.\n\nNote:\nYou may receive a warning after turning this screen. You may safely ignore that, as Magic Cleaner doesn\'t collect any of your personal information.</string>
+    <string name="service_description_tutorial">The next time you type a greeting in WhatsApp, Dr Kleen will suggest photos for it!</string>
+    <string name="tap_to_send">Choose an image to send!</string>
+    <string name="stop_suggesting">Tap to stop suggesting images</string>
+    <string name="enable_whatsapp_assist">Activate Magic Assistant</string>
+    <string name="accessibility_tutorial_message">To activate, allow Magic Cleaner in the upcoming screens.</string>
+    <string name="not_now">NOT NOW</string>
+    <string name="enable">ACTIVATE</string>
+    <string name="accessibility_app_name" translatable="false">AirtelHack</string>
+    <string name="scroll_down">Scroll down and click on contact to send</string>
+    <string name="whatsapp_hint_text_first_time">Tap to pay \nBalance - %s</string>
+    <string name="whatsapp_hint_text">Balance - %s</string>
+    <string name="instagram_hint_text">Tap to get #tag suggestions</string>
+
+    <string name="error_downloading_images_whatsapp">Could not download images. Please check your internet connection.</string>
+    <string name="loading_images">Loading Images...</string>
+    <string name="no_internet">Please check your internet connection.</string>
+    <string name="dismiss"></string>
+    <string name="disable_forever">DISABLE FOREVER</string>
+
+    <string name="nav_profile">My Account</string>
+    <string name="nav_add_recipient">Add Recipients</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_rate_app">Rate App</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <string-array name="nav_item_activity_titles">
+        <item>My Account</item>
+        <item>Add Recipients</item>
+    </string-array>
+
 </resources>

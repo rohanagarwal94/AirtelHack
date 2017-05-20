@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/htn_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="9dp"
+        android:background="@drawable/hint_btn_background"
+        android:padding="15dp"
+        android:text="@string/scroll_down"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        tools:text="Look for voodo in list and click" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_cancel_black_18dp" />
+</FrameLayout>
