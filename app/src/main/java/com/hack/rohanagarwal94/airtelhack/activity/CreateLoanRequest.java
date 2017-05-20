@@ -14,10 +14,29 @@ import android.widget.MultiAutoCompleteTextView;
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.model.User;
 import com.hack.rohanagarwal94.airtelhack.util.ContactPickerMulti;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by viveksb007 on 20/5/17.
@@ -25,9 +44,14 @@ import java.util.ArrayList;
 
 public class CreateLoanRequest extends AppCompatActivity {
 
+    private static final String TAG = CreateLoanRequest.class.getSimpleName();
     Button btnAddRecipient;
     EditText etPhoneNumber, etAccountNumber;
-
+    FirebaseDatabase database;
+    RequestQueue requestQueue;
+    DatabaseReference myRef;
+    ArrayList<String> phoneNumbers;
+    ArrayList<String> firebaseIds;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +60,8 @@ public class CreateLoanRequest extends AppCompatActivity {
         //btnAddRecipient = (Button) findViewById(R.id.btn_add_recipient);
         etPhoneNumber = (EditText) findViewById(R.id.amount);
         etAccountNumber = (EditText) findViewById(R.id.title);
+        phoneNumbers = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(CreateLoanRequest.this);
         /*
         btnAddRecipient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,15 +91,97 @@ public class CreateLoanRequest extends AppCompatActivity {
         btnSubmitLoadRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> phoneNumbers = new ArrayList<>();
                 DrawableRecipientChip[] chips = phoneRetv.getSortedRecipients();
                 for (DrawableRecipientChip chip : chips) {
                     //Log.v("DrawableChip", chip.getEntry().getDisplayName() + " " + chip.getEntry().getDestination());
                     phoneNumbers.add(chip.getEntry().getDestination().replace(" ", "").substring(3));
                 }
+                getUsers();
                 Log.v("Contact",phoneNumbers.toString());
             }
         });
+
+    }
+
+    public void getUsers(){
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        firebaseIds=new ArrayList<>();
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i(TAG,""+dataSnapshot.getChildrenCount());
+                for(DataSnapshot data:dataSnapshot.getChildren()){
+                    String mobile=data.getKey();
+                    if(phoneNumbers.contains(mobile)){
+                        User user=data.getValue(User.class);
+                        firebaseIds.add(user.getFirebaseID());
+                        Log.i(TAG,""+user.getFirebaseID());
+                    }
+                }
+                sendNotifications();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        myRef.addValueEventListener(postListener);
+    }
+
+    public void sendNotifications(){
+        if(firebaseIds!=null){
+            Log.i(TAG,"here1");
+            for(String id:firebaseIds){
+                send(id);
+            }
+        }
+    }
+
+    private void send(String id) {
+
+        final String URL = "https://fcm.googleapis.com/fcm/send";
+        JSONObject object=new JSONObject();
+        Log.i(TAG,"here");
+        JSONObject json=new JSONObject();
+        try {
+            json.put("title", "score");
+            json.put("body", "match is going on");
+            object.put("notification", json);
+            object.put("to", id);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+            JsonObjectRequest request_json = new JsonObjectRequest(URL, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                params.put("Authorization","key=AAAAaReRW5w:APA91bE1l3m66eq2-QLt_vbNackzBfEsuaasXfNbqvmhClng40GiwL7KtV6W1wQ7DptlzYIb6zhWCtFAc4CwVWq5DJg2GXoYTLteXpe4F95bLO3HPRJNUsvfQQuZpil5QcENbbwGU--_");
+                return params;
+            }
+        };
+
+        requestQueue.add(request_json);
+
     }
 
     @Override
