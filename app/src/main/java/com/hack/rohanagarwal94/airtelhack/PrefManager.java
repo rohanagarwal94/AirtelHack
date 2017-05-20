@@ -30,6 +30,16 @@ public class PrefManager {
         return preferences.getString(phoneNumber, null);
     }
 
+    public void setWalletAmount(int walletAmount) {
+        editor = preferences.edit();
+        editor.putInt("wallet_amount", walletAmount);
+        editor.apply();
+    }
+
+    public int getWalletAmount() {
+        return preferences.getInt("wallet_amount", 0);
+    }
+
     public void setNameAndNumber(String name, String number) {
         editor = preferences.edit();
         editor.putString("name", name);

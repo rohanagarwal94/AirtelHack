@@ -60,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
         myRef.child(etPhoneNumber.getText().toString()).setValue(user);
         PrefManager manager = new PrefManager(this);
         manager.setNameAndNumber(etUserName.getText().toString(), etPhoneNumber.getText().toString());
+        manager.setWalletAmount(100);
         manager.setFirstTime(false);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
