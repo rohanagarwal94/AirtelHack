@@ -46,6 +46,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "451366968220-lhmdo58t4fq65en2rej765ovtrnptdc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hack.rohanagarwal94.airtelhack",
+            "certificate_hash": "d2b62c187baa703a874afc21aa630ed20ff475fe"
+          }
+        },
+        {
           "client_id": "451366968220-k530pmmce9lnr559p312rebqjr06qmua.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -60,8 +68,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451366968220-k530pmmce9lnr559p312rebqjr06qmua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

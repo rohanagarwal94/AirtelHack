@@ -15,7 +15,7 @@ public class Loan {
     private float amountLeft;
     private ArrayList<Creditor> creditors;
 
-    Loan(String name, String title, int type, float amountTotal){
+    public Loan(String name, String title, int type, float amountTotal){
         this.name = name;
         this.title = title;
         this.type = type;
