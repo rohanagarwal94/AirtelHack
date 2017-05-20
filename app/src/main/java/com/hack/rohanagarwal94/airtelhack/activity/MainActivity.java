@@ -12,31 +12,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.hack.rohanagarwal94.airtelhack.R;
-import com.hack.rohanagarwal94.airtelhack.api.ClientBuilder;
-import com.hack.rohanagarwal94.airtelhack.config.Constants;
 import com.hack.rohanagarwal94.airtelhack.fragments.MyAccountFragment;
-import com.hack.rohanagarwal94.airtelhack.model.RecentTransactionResponse;
-import com.hack.rohanagarwal94.airtelhack.model.User;
+import com.hack.rohanagarwal94.airtelhack.fragments.ReceivedRequestsFragment;
+import com.hack.rohanagarwal94.airtelhack.fragments.SentRequestsFragment;
 import com.hack.rohanagarwal94.airtelhack.service.SuggestionService;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     public static int navItemIndex = 0;
 
     private static final String TAG_MY_ACCOUNT = "my_account";
-    private static final String TAG_ADD_RECIPIENTS = "add_recipient";
+    private static final String TAG_RECEIVED_REQUEST = "received_request";
+    private static final String TAG_SENT_REQUEST = "sent_request";
     public static String CURRENT_TAG = TAG_MY_ACCOUNT;
     private String[] activityTitles;
 
@@ -64,35 +51,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(this, SuggestionService.class);
         startService(intent);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mHandler = new Handler();
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        //TODO: fix this
-
-        new ClientBuilder().getIciciApi().recentTransaction(Constants.CLIENT_ID, Constants.ACCESS_TOKEN, Constants.SOURCE_ACC).enqueue(new Callback<List<RecentTransactionResponse>>() {
-            @Override
-            public void onResponse(Call<List<RecentTransactionResponse>> call, Response<List<RecentTransactionResponse>> response) {
-                Log.d("transactions", response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<List<RecentTransactionResponse>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.name);
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
         loadNavHeader();
-
         setUpNavigationView();
 
         if (savedInstanceState == null) {
@@ -100,31 +68,6 @@ public class MainActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_MY_ACCOUNT;
             loadHomeFragment();
         }
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-
-        User user = new User();
-        user.setName("Rishabh");
-        user.setFirebaseID(FirebaseInstanceId.getInstance().getToken());
-        user.setWalletAmount(100);
-        user.setLoans(null);
-        myRef.child("8375089216").setValue(user);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " );
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
 
     }
 
@@ -158,7 +101,12 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 MyAccountFragment accountFragment = new MyAccountFragment();
                 return accountFragment;
-
+            case 1:
+                SentRequestsFragment sentRequestsFragment = new SentRequestsFragment();
+                return sentRequestsFragment;
+            case 2:
+                ReceivedRequestsFragment receivedRequestsFragment = new ReceivedRequestsFragment();
+                return receivedRequestsFragment;
             default:
                 return new MyAccountFragment();
         }
@@ -181,9 +129,13 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_MY_ACCOUNT;
                         break;
-                    case R.id.nav_add_recipient:
+                    case R.id.nav_sent_request:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_ADD_RECIPIENTS;
+                        CURRENT_TAG = TAG_SENT_REQUEST;
+                        break;
+                    case R.id.nav_received_request:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_RECEIVED_REQUEST;
                         break;
                     default:
                         navItemIndex = 0;
