@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "451366968220",
+    "firebase_url": "https://airtelwhack.firebaseio.com",
+    "project_id": "airtelwhack",
+    "storage_bucket": "airtelwhack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451366968220:android:1c3bcc35b7bf8fe2",
+        "android_client_info": {
+          "package_name": "com.rishabh.airtelwhack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451366968220-k530pmmce9lnr559p312rebqjr06qmua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBemZ1BDprySw524ZY53LuW21gQb-HJenc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451366968220:android:92091298c554a688",
+        "android_client_info": {
+          "package_name": "com.hack.rohanagarwal94.airtelhack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451366968220-k530pmmce9lnr559p312rebqjr06qmua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBemZ1BDprySw524ZY53LuW21gQb-HJenc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

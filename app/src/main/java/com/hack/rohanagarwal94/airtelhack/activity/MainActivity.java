@@ -18,12 +18,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.hack.rohanagarwal94.airtelhack.R;
 import com.hack.rohanagarwal94.airtelhack.api.ClientBuilder;
 import com.hack.rohanagarwal94.airtelhack.config.Constants;
 import com.hack.rohanagarwal94.airtelhack.fragments.AddRecipientFragment;
 import com.hack.rohanagarwal94.airtelhack.fragments.MyAccountFragment;
 import com.hack.rohanagarwal94.airtelhack.model.RecentTransactionResponse;
+import com.hack.rohanagarwal94.airtelhack.model.User;
 import com.hack.rohanagarwal94.airtelhack.service.SuggestionService;
 
 import java.util.List;
@@ -34,6 +41,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
@@ -93,6 +101,32 @@ public class MainActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_MY_ACCOUNT;
             loadHomeFragment();
         }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        User user = new User();
+        user.setName("Rishabh");
+        user.setFirebaseID(FirebaseInstanceId.getInstance().getToken());
+        user.setWalletAmount(100);
+        user.setLoans(null);
+        myRef.child("8375089216").setValue(user);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                //String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
     private void loadHomeFragment() {
