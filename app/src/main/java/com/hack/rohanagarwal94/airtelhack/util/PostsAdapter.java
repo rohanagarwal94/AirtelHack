@@ -5,67 +5,66 @@ package com.hack.rohanagarwal94.airtelhack.util;
  */
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
+import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.config.Constants;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
-import com.rnrapps.user.dtuguide.AppController;
-import com.rnrapps.user.dtuguide.R;
-import com.rnrapps.user.dtuguide.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder> {
+public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder>{
 
     private Activity activity;
     private List<Loan> feedItems;
-    private AdapterCallback mAdapterCallback;
 
+    private OnItemClickListener mItemClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView name, title;
+    public interface OnItemClickListener {
+        public void onItemClick(View view , int position);
+    }
+
+    public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public TextView name, title, amount;
         public ImageView imageView;
-        public int amount;
 
         public MyViewHolder(View view) {
             super(view);
             view.bringToFront();
             name = (TextView) view
-                    .findViewById(R.id.);
+                    .findViewById(R.id.track_description);
             amount = (TextView) view
-                    .findViewById(R.id.timestamp);
+                    .findViewById(R.id.amt_left);
             title = (TextView) view
-                    .findViewById(R.id.txtStatusMsg);
-            imageView = (ImageView) view.findViewById(R.id.txtUrl);
+                    .findViewById(R.id.track_title);
+            imageView = (ImageView) view.findViewById(R.id.imageView3);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            mItemClickListener.onItemClick(v, getPosition()); //OnItemClickListener mItemClickListener;
         }
     }
     
-    public PostsAdapter(Activity activity,List<FeedItem> feedItems) {
+    public PostsAdapter(Activity activity,List<Loan> feedItems) {
         this.feedItems=feedItems;
         this.activity=activity;
-        try {
-            this.mAdapterCallback = ((AdapterCallback) activity);
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement AdapterCallback.");
-        }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.feed_item, parent, false);
+                .inflate(R.layout.item_loan, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -76,46 +75,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
 
         final Loan item=feedItems.get(position);
 
-        String a=item.getTimeStamp();
-        holder.timestamp.setText(Utils.getTimeFromTimestamp(a));
-
-        if (!TextUtils.isEmpty(item.getStatus())) {
-            holder. statusMsg.setText(item.getStatus());
-            holder.statusMsg.setVisibility(View.VISIBLE);
-        } else {
-            // status is empty, remove from view
-            holder.statusMsg.setVisibility(View.GONE);
-        }
-
-        // Checking for null feed url
-        if (item.getUrl() != null) {
-            holder.url.setText(Html.fromHtml("<a href=\"" + item.getUrl() + "\">"
-                    + item.getUrl() + "</a> "));
-
-            // Making url clickable
-            holder.url.setMovementMethod(LinkMovementMethod.getInstance());
-            holder.url.setVisibility(View.VISIBLE);
-        } else {
-            // url is null, remove from the view
-            holder.url.setVisibility(View.GONE);
-        }
-
-        if (item.getImge() != null) {
-            holder.feedImageView.setImageUrl(item.getImge(), imageLoader);
-            holder.feedImageView.setVisibility(View.VISIBLE);
-            holder.feedImageView
-                    .setResponseObserver(new FeedImageView.ResponseObserver() {
-                        @Override
-                        public void onError() {
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                        }
-                    });
-        } else {
-            holder.feedImageView.setVisibility(View.GONE);
-        }
+        String name = item.getName();
+        String title = item.getTitle();
+        float amount = item.getAmountLeft();
+        holder.title.setText(title);
+        holder.name.setText(name);
+        holder.amount.setText(Float.toString(amount));
+        int type = item.getType();
+        holder.imageView.setImageDrawable(activity.getResources().getDrawable(Constants.imageDrawable.get(Integer.valueOf(type))));
 
     }
 

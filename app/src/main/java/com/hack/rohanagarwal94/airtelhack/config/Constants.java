@@ -1,5 +1,10 @@
 package com.hack.rohanagarwal94.airtelhack.config;
 
+import com.hack.rohanagarwal94.airtelhack.R;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
 	public static final String ACCESS_TOKEN = "7191a40d3094";
 	public static final String CLIENT_ID = "rohanagarwal94@yahoo.com.sg";
@@ -12,6 +17,11 @@ public class Constants {
     public static final int MOBILE_BILL = 1;
     public static final int ELECTRICITY_BILL = 3;
     public static final int GAS_BILL = 2;
+    public static final Map<Integer, Integer> imageDrawable = new HashMap<Integer, Integer>() {{
+        put(1, R.drawable.smartphone);
+        put(2, R.drawable.fire);
+        put(3, R.drawable.flash);
+    }};
 
     private Constants() {
 	}
