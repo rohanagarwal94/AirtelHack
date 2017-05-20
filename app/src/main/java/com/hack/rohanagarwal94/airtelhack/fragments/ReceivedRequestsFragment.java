@@ -63,7 +63,6 @@ public class ReceivedRequestsFragment extends Fragment {
         if(swipeRefreshLayout != null) swipeRefreshLayout.setOnRefreshListener(null);
     }
 
-
     public void handleVisibility() {
             noSessionsView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
