@@ -30,4 +30,25 @@ public class PrefManager {
         return preferences.getString(phoneNumber, null);
     }
 
+    public void setNameAndNumber(String name, String number) {
+        editor = preferences.edit();
+        editor.putString("name", name);
+        editor.putString("number", number);
+        editor.apply();
+    }
+
+    public String[] getNameAndNumber() {
+        return new String[]{preferences.getString("name", null), preferences.getString("number", null)};
+    }
+
+    public void setFirstTime(boolean isFirstTime) {
+        editor = preferences.edit();
+        editor.putBoolean("first_time", isFirstTime);
+        editor.apply();
+    }
+
+    public boolean isFirstTime() {
+        return preferences.getBoolean("first_time", true);
+    }
+
 }

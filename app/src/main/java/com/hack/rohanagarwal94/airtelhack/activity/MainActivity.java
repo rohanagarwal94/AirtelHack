@@ -27,7 +27,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.hack.rohanagarwal94.airtelhack.R;
 import com.hack.rohanagarwal94.airtelhack.api.ClientBuilder;
 import com.hack.rohanagarwal94.airtelhack.config.Constants;
-import com.hack.rohanagarwal94.airtelhack.fragments.AddRecipientFragment;
 import com.hack.rohanagarwal94.airtelhack.fragments.MyAccountFragment;
 import com.hack.rohanagarwal94.airtelhack.model.RecentTransactionResponse;
 import com.hack.rohanagarwal94.airtelhack.model.User;
@@ -159,9 +158,7 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 MyAccountFragment accountFragment = new MyAccountFragment();
                 return accountFragment;
-            case 1:
-                AddRecipientFragment recipientFragment = new AddRecipientFragment();
-                return recipientFragment;
+
             default:
                 return new MyAccountFragment();
         }
