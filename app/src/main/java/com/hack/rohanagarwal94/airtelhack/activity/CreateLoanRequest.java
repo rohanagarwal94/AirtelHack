@@ -23,10 +23,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.hack.rohanagarwal94.airtelhack.PrefManager;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.hack.rohanagarwal94.airtelhack.model.User;
 import com.hack.rohanagarwal94.airtelhack.util.ContactPickerMulti;
 
@@ -34,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -46,7 +49,8 @@ public class CreateLoanRequest extends AppCompatActivity {
 
     private static final String TAG = CreateLoanRequest.class.getSimpleName();
     Button btnAddRecipient;
-    EditText etPhoneNumber, etAccountNumber;
+    EditText etTitle, etAmount;
+
     FirebaseDatabase database;
     RequestQueue requestQueue;
     DatabaseReference myRef;
@@ -58,8 +62,8 @@ public class CreateLoanRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_loan_request);
         //btnAddRecipient = (Button) findViewById(R.id.btn_add_recipient);
-        etPhoneNumber = (EditText) findViewById(R.id.amount);
-        etAccountNumber = (EditText) findViewById(R.id.title);
+        etTitle = (EditText) findViewById(R.id.title);
+        etAmount = (EditText) findViewById(R.id.amount);
         phoneNumbers = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(CreateLoanRequest.this);
         /*
@@ -98,6 +102,7 @@ public class CreateLoanRequest extends AppCompatActivity {
                 }
                 getUsers();
                 Log.v("Contact",phoneNumbers.toString());
+                pushLoanRequest();
             }
         });
 
@@ -182,6 +187,13 @@ public class CreateLoanRequest extends AppCompatActivity {
 
         requestQueue.add(request_json);
 
+    }
+
+    public void pushLoanRequest() {
+        PrefManager manager = new PrefManager(this);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(manager.getNameAndNumber()[1]).child("sendLoans");
+        Loan loan = new Loan(manager.getNameAndNumber()[0], etTitle.getText().toString(), new Random().nextInt(2), Float.parseFloat(etAmount.getText().toString()));
+        reference.setValue(loan);
     }
 
     @Override
