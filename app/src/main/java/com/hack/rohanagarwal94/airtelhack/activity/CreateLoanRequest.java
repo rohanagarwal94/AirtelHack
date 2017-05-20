@@ -112,8 +112,8 @@ public class CreateLoanRequest extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
         firebaseIds = new ArrayList<>();
-
         ValueEventListener postListener = new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i(TAG, "" + dataSnapshot.getChildrenCount());
@@ -136,10 +136,11 @@ public class CreateLoanRequest extends AppCompatActivity {
             }
         };
 
-        myRef.addValueEventListener(postListener);
+        myRef.addListenerForSingleValueEvent(postListener);
     }
 
     public void sendNotifications() {
+        Log.i(TAG,firebaseIds.size()+"+");
         if (firebaseIds != null) {
             Log.i(TAG, "here1");
             for (String id : firebaseIds) {
@@ -185,7 +186,6 @@ public class CreateLoanRequest extends AppCompatActivity {
                 return params;
             }
         };
-
         requestQueue.add(request_json);
 
     }
