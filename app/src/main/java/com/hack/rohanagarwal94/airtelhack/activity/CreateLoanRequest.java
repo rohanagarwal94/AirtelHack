@@ -101,28 +101,28 @@ public class CreateLoanRequest extends AppCompatActivity {
                     phoneNumbers.add(chip.getEntry().getDestination().replace(" ", "").substring(3));
                 }
                 getUsers();
-                Log.v("Contact",phoneNumbers.toString());
+                Log.v("Contact", phoneNumbers.toString());
                 pushLoanRequest();
             }
         });
 
     }
 
-    public void getUsers(){
+    public void getUsers() {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        firebaseIds=new ArrayList<>();
+        firebaseIds = new ArrayList<>();
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i(TAG,""+dataSnapshot.getChildrenCount());
-                for(DataSnapshot data:dataSnapshot.getChildren()){
-                    String mobile=data.getKey();
-                    if(phoneNumbers.contains(mobile)){
-                        User user=data.getValue(User.class);
+                Log.i(TAG, "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    String mobile = data.getKey();
+                    if (phoneNumbers.contains(mobile)) {
+                        User user = data.getValue(User.class);
                         firebaseIds.add(user.getFirebaseID());
-                        Log.i(TAG,""+user.getFirebaseID());
+                        Log.i(TAG, "" + user.getFirebaseID());
                     }
                 }
                 sendNotifications();
@@ -139,10 +139,10 @@ public class CreateLoanRequest extends AppCompatActivity {
         myRef.addValueEventListener(postListener);
     }
 
-    public void sendNotifications(){
-        if(firebaseIds!=null){
-            Log.i(TAG,"here1");
-            for(String id:firebaseIds){
+    public void sendNotifications() {
+        if (firebaseIds != null) {
+            Log.i(TAG, "here1");
+            for (String id : firebaseIds) {
                 send(id);
             }
         }
@@ -151,18 +151,18 @@ public class CreateLoanRequest extends AppCompatActivity {
     private void send(String id) {
 
         final String URL = "https://fcm.googleapis.com/fcm/send";
-        JSONObject object=new JSONObject();
-        Log.i(TAG,"here");
-        JSONObject json=new JSONObject();
+        JSONObject object = new JSONObject();
+        Log.i(TAG, "here");
+        JSONObject json = new JSONObject();
         try {
             json.put("title", "score");
             json.put("body", "match is going on");
             object.put("notification", json);
             object.put("to", id);
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-            JsonObjectRequest request_json = new JsonObjectRequest(URL, object,
+        JsonObjectRequest request_json = new JsonObjectRequest(URL, object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -174,13 +174,12 @@ public class CreateLoanRequest extends AppCompatActivity {
                 VolleyLog.e("Error: ", error.getMessage());
             }
 
-        })
-        {
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                params.put("Authorization","key=AAAAaReRW5w:APA91bE1l3m66eq2-QLt_vbNackzBfEsuaasXfNbqvmhClng40GiwL7KtV6W1wQ7DptlzYIb6zhWCtFAc4CwVWq5DJg2GXoYTLteXpe4F95bLO3HPRJNUsvfQQuZpil5QcENbbwGU--_");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", "key=AAAAaReRW5w:APA91bE1l3m66eq2-QLt_vbNackzBfEsuaasXfNbqvmhClng40GiwL7KtV6W1wQ7DptlzYIb6zhWCtFAc4CwVWq5DJg2GXoYTLteXpe4F95bLO3HPRJNUsvfQQuZpil5QcENbbwGU--_");
                 return params;
             }
         };
@@ -189,11 +188,14 @@ public class CreateLoanRequest extends AppCompatActivity {
 
     }
 
+    String key;
+    
     public void pushLoanRequest() {
         PrefManager manager = new PrefManager(this);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(manager.getNameAndNumber()[1]).child("sendLoans");
         Loan loan = new Loan(manager.getNameAndNumber()[0], etTitle.getText().toString(), new Random().nextInt(2), Float.parseFloat(etAmount.getText().toString()));
-        reference.setValue(loan);
+        key = reference.push().getKey();
+        reference.child(key).setValue(loan);
     }
 
     @Override
