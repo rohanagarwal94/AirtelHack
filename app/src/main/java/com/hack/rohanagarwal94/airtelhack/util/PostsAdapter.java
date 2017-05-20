@@ -85,14 +85,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         holder.amount.setText(Float.toString(amount));
         int type = item.getType();
         holder.imageView.setImageDrawable(activity.getResources().getDrawable(Constants.imageDrawable.get(Integer.valueOf(type))));
-
     }
-
 
     @Override
     public int getItemCount() {
         return feedItems.size();
     }
-
 
 }
