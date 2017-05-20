@@ -1,7 +1,9 @@
 package com.hack.rohanagarwal94.airtelhack.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,6 +43,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * Created by viveksb007 on 20/5/17.
  */
@@ -57,10 +61,18 @@ public class CreateLoanRequest extends AppCompatActivity {
     ArrayList<String> phoneNumbers;
     ArrayList<String> firebaseIds;
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_loan_request);
+        getPermissions();
         //btnAddRecipient = (Button) findViewById(R.id.btn_add_recipient);
         etTitle = (EditText) findViewById(R.id.title);
         etAmount = (EditText) findViewById(R.id.amount);
@@ -106,6 +118,12 @@ public class CreateLoanRequest extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getPermissions() {
+        if (!EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+            EasyPermissions.requestPermissions(this, "This app needs to access contacts to send Loan Requests.", 0, Manifest.permission.READ_CONTACTS);
+        }
     }
 
     public void getUsers() {
@@ -158,7 +176,7 @@ public class CreateLoanRequest extends AppCompatActivity {
         try {
             json.put("title", key);
             PrefManager manager = new PrefManager(this);
-            String[] nameAndNumber=manager.getNameAndNumber();
+            String[] nameAndNumber = manager.getNameAndNumber();
             json.put("body", nameAndNumber[1]);
             object.put("notification", json);
             object.put("to", id);
@@ -189,7 +207,7 @@ public class CreateLoanRequest extends AppCompatActivity {
         requestQueue.add(request_json);
 
     }
-    
+
     public void pushLoanRequest() {
         PrefManager manager = new PrefManager(this);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(manager.getNameAndNumber()[1]).child("sendLoans");
