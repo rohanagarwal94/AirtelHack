@@ -7,16 +7,15 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
 /**
  * Created by lenovo on 20/05/2017.
  */
 
-public class MyFirebaseInstanceIDService extends Service {
-
-    @Nullable
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public void onTokenRefresh() {
+        super.onTokenRefresh();
     }
 }

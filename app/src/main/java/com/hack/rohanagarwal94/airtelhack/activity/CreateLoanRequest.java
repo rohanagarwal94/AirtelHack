@@ -50,7 +50,7 @@ public class CreateLoanRequest extends AppCompatActivity {
     private static final String TAG = CreateLoanRequest.class.getSimpleName();
     Button btnAddRecipient;
     EditText etTitle, etAmount;
-
+    String key;
     FirebaseDatabase database;
     RequestQueue requestQueue;
     DatabaseReference myRef;
@@ -155,8 +155,10 @@ public class CreateLoanRequest extends AppCompatActivity {
         Log.i(TAG, "here");
         JSONObject json = new JSONObject();
         try {
-            json.put("title", "score");
-            json.put("body", "match is going on");
+            json.put("title", key);
+            PrefManager manager = new PrefManager(this);
+            String[] nameAndNumber=manager.getNameAndNumber();
+            json.put("body", nameAndNumber[1]);
             object.put("notification", json);
             object.put("to", id);
         } catch (JSONException e) {
@@ -187,8 +189,6 @@ public class CreateLoanRequest extends AppCompatActivity {
         requestQueue.add(request_json);
 
     }
-
-    String key;
     
     public void pushLoanRequest() {
         PrefManager manager = new PrefManager(this);
