@@ -34,10 +34,10 @@ public class AddRecipientFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.add_recipeint_fragment, container, false);
+        View v = inflater.inflate(R.layout.add_recipient_fragment, container, false);
         btnAddRecipient = (Button) v.findViewById(R.id.btn_add_recipient);
-        etPhoneNumber = (EditText) v.findViewById(R.id.et_phone_number);
-        etAccountNumber = (EditText) v.findViewById(R.id.et_account_number);
+        etPhoneNumber = (EditText) v.findViewById(R.id.amount);
+        etAccountNumber = (EditText) v.findViewById(R.id.title);
         btnAddRecipient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
