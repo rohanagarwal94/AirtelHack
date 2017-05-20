@@ -19,7 +19,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
-
+    <string name="phone_numbers">Phone Numbers</string>
     <string-array name="nav_item_activity_titles">
         <item>My Account</item>
         <item>Sent Requests</item>
