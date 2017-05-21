@@ -14,8 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.hack.rohanagarwal94.airtelhack.PrefManager;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.model.Creditor;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
@@ -84,6 +86,12 @@ public class ReceivedRequestActivity extends AppCompatActivity {
 
             }
         });
+        Creditor creditor = new Creditor();
+        creditor.setAmountLoaned(seekBar.getValue());
+        creditor.setFirebaseID(FirebaseInstanceId.getInstance().getToken());
+        creditor.setMobileNumber(new PrefManager(this).getNameAndNumber()[1]);
+        creditor.setName(new PrefManager(this).getNameAndNumber()[0]);
+        reference.child(number).child("sendLoans").child(key).child("creditors").child(new PrefManager(this).getNameAndNumber()[1]).setValue(creditor);
         Toast.makeText(this, "Transaction Successful", Toast.LENGTH_SHORT).show();
     }
 
