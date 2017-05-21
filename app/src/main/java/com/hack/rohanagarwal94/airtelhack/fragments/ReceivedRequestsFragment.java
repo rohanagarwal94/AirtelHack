@@ -1,5 +1,6 @@
 package com.hack.rohanagarwal94.airtelhack.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hack.rohanagarwal94.airtelhack.PrefManager;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.activity.ReceivedRequestActivity;
 import com.hack.rohanagarwal94.airtelhack.model.Creditor;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.hack.rohanagarwal94.airtelhack.util.PostsAdapter;
@@ -57,13 +59,24 @@ public class ReceivedRequestsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         loans=new ArrayList<>();
         tracksListAdapter = new PostsAdapter(getActivity(), loans);
+
+        final PrefManager manager=new PrefManager(getActivity());
+        tracksListAdapter.SetOnItemClickListener(new PostsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.i(TAG," gyfgewhj");
+                Intent intent=new Intent(getActivity(), ReceivedRequestActivity.class);
+                intent.putExtra("key",manager.getKeyAndNumber(position+1)[0]);
+                intent.putExtra("number",manager.getKeyAndNumber(position+1)[1]);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(tracksListAdapter);
 
-        PrefManager manager=new PrefManager(getActivity());
 
 
         for(int i=1;i<=manager.getReqQ();i++){
-
+            loans.clear();
             String[] data=manager.getKeyAndNumber(i);
             database = FirebaseDatabase.getInstance();
             myRef = database.getReference(data[1]+"/sendLoans/"+data[0]);

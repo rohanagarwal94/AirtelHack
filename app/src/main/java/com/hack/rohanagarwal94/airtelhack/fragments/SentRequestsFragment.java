@@ -68,6 +68,7 @@ public class SentRequestsFragment extends Fragment {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                loans.clear();
                 Log.i(TAG, "" + dataSnapshot.getChildrenCount());
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Loan loan=new Loan();

@@ -219,6 +219,9 @@ public class CreateLoanRequest extends AppCompatActivity {
         Loan loan = new Loan(manager.getNameAndNumber()[0], etTitle.getText().toString(), new Random().nextInt(2), Float.parseFloat(etAmount.getText().toString()), Float.parseFloat(etAmount.getText().toString()));
         key = reference.push().getKey();
         reference.child(key).setValue(loan);
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

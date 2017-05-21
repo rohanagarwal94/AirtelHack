@@ -46,7 +46,7 @@ public class MyAccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.my_account_fragment, container, false);
-        PrefManager manager = new PrefManager(getContext());
+        final PrefManager manager = new PrefManager(getContext());
         TextView name = (TextView) v.findViewById(R.id.tv_name);
         TextView number = (TextView) v.findViewById(R.id.tv_phone_number);
         final TextView walletBalance = (TextView) v.findViewById(R.id.tv_wallet_balance);
@@ -70,6 +70,7 @@ public class MyAccountFragment extends Fragment {
                 walletAmount=dataSnapshot.getValue().toString();
                 Log.i("MyAccountFragment",walletAmount);
                 walletBalance.setText(walletAmount);
+                manager.setWalletAmount((int)Float.parseFloat(walletAmount));
             }
 
             @Override

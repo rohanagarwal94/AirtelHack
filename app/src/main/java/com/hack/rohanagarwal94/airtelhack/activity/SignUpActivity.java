@@ -55,12 +55,12 @@ public class SignUpActivity extends AppCompatActivity {
         User user = new User();
         user.setName(etUserName.getText().toString());
         user.setFirebaseID(FirebaseInstanceId.getInstance().getToken());
-        user.setWalletAmount(100);
+        user.setWalletAmount(1000);
         user.setLoans(null);
         myRef.child(etPhoneNumber.getText().toString()).setValue(user);
         PrefManager manager = new PrefManager(this);
         manager.setNameAndNumber(etUserName.getText().toString(), etPhoneNumber.getText().toString());
-        manager.setWalletAmount(100);
+        manager.setWalletAmount(1000);
         manager.setFirstTime(false);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

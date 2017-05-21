@@ -1,5 +1,6 @@
 package com.hack.rohanagarwal94.airtelhack.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -93,11 +94,14 @@ public class ReceivedRequestActivity extends AppCompatActivity {
         creditor.setName(new PrefManager(this).getNameAndNumber()[0]);
         reference.child(number).child("sendLoans").child(key).child("creditors").child(new PrefManager(this).getNameAndNumber()[1]).setValue(creditor);
         Toast.makeText(this, "Transaction Successful", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void updateUIParameters() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(number).child("sendLoans").child(key);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.v("asdf", dataSnapshot.toString());
