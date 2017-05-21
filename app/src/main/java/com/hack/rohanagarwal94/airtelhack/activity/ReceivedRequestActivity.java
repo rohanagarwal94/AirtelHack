@@ -22,6 +22,8 @@ import com.hack.rohanagarwal94.airtelhack.model.Creditor;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
+import java.util.ArrayList;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -103,10 +105,22 @@ public class ReceivedRequestActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(number).child("sendLoans").child(key);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v("asdf", dataSnapshot.toString());
-                loan = dataSnapshot.getValue(Loan.class);
-                Log.i(TAG, loan.getName());
+            public void onDataChange(DataSnapshot data) {
+                Log.v("asdf", data.toString());
+                loan=new Loan();
+                loan.setAmountLeft(Float.parseFloat(data.child("amountLeft").getValue().toString()));
+                loan.setAmountTotal(Float.parseFloat(data.child("amountTotal").getValue().toString()));
+                loan.setName(data.child("name").getValue().toString());
+                loan.setTitle(data.child("title").getValue().toString());
+                loan.setType(Integer.parseInt(data.child("type").getValue().toString()));
+                ArrayList<Creditor> creditors=new ArrayList<>();
+                if(data.hasChild("creditors")){
+                    for(DataSnapshot ds:data.child("creditors").getChildren()){
+                        Creditor creditor=ds.getValue(Creditor.class);
+                        creditors.add(creditor);
+                    }
+                }
+                loan.setCreditors(creditors);
                 name.setText(loan.getName());
                 title.setText(loan.getTitle());
                 seekBar.setMax((int) loan.getAmountLeft());
