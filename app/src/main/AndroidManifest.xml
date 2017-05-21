@@ -37,6 +37,12 @@
 
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.CreateLoanRequest" />
+        <activity android:name=".activity.ReceivedRequestActivity">
+            <intent-filter>
+                <action android:name="airtel.hack" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.SuggestionService"
