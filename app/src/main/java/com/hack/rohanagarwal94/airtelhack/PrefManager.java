@@ -3,6 +3,8 @@ package com.hack.rohanagarwal94.airtelhack;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
 /**
  * Created by viveksb007 on 16/4/17.
  */
@@ -27,6 +29,12 @@ public class PrefManager {
         editor.apply();
     }
 
+    public String[] getKeyAndNumber(int i){
+        return new String[] {
+                preferences.getString("key"+String.valueOf(i),"XXXXXXXXXXXXXXXXXX"),
+                preferences.getString("number"+String.valueOf(i),"XXXXXXXXXX")
+        };
+    }
     public String getAccountNumber(String phoneNumber) {
         return preferences.getString(phoneNumber, null);
     }

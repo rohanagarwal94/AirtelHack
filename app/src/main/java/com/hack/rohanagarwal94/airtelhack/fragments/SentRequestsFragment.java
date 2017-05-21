@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hack.rohanagarwal94.airtelhack.PrefManager;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.model.Creditor;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.hack.rohanagarwal94.airtelhack.model.User;
 import com.hack.rohanagarwal94.airtelhack.util.PostsAdapter;
@@ -60,7 +61,7 @@ public class SentRequestsFragment extends Fragment {
         recyclerView.setAdapter(tracksListAdapter);
 
         database = FirebaseDatabase.getInstance();
-        PrefManager manager = new PrefManager(getActivity());
+        final PrefManager manager = new PrefManager(getActivity());
         myRef = database.getReference(manager.getNameAndNumber()[1]+"/sendLoans");
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -69,9 +70,25 @@ public class SentRequestsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i(TAG, "" + dataSnapshot.getChildrenCount());
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Loan loan=data.getValue(Loan.class);
-                    Log.i(TAG,loan.getName());
+                    Loan loan=new Loan();
+                    //String key=data.getKey();
+                    //data=dataSnapshot.child(key);
+                    //Log.i(TAG,key);
+                    loan.setAmountLeft(Float.parseFloat(data.child("amountLeft").getValue().toString()));
+                    loan.setAmountTotal(Float.parseFloat(data.child("amountTotal").getValue().toString()));
+                    loan.setName(data.child("name").getValue().toString());
+                    loan.setTitle(data.child("title").getValue().toString());
+                    loan.setType(Integer.parseInt(data.child("type").getValue().toString()));
+                    ArrayList<Creditor> creditors=new ArrayList<>();
+                    if(data.hasChild("creditors")){
+                        for(DataSnapshot ds:data.child("creditors").getChildren()){
+                            Creditor creditor=ds.getValue(Creditor.class);
+                            creditors.add(creditor);
+                        }
+                    }
+                    loan.setCreditors(creditors);
                     loans.add(loan);
+
                 }
                 Log.i(TAG,loans.size()+"+");
                 tracksListAdapter.notifyDataSetChanged();

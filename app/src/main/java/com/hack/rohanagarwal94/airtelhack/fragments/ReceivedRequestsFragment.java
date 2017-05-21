@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hack.rohanagarwal94.airtelhack.PrefManager;
 import com.hack.rohanagarwal94.airtelhack.R;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.hack.rohanagarwal94.airtelhack.util.PostsAdapter;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class ReceivedRequestsFragment extends Fragment {
 
-    private List<Loan> loans = new ArrayList<>();
+    private List<Loan> loans;
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     TextView noSessionsView;
@@ -45,6 +46,12 @@ public class ReceivedRequestsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         tracksListAdapter = new PostsAdapter(getActivity(), loans);
         recyclerView.setAdapter(tracksListAdapter);
+
+        PrefManager manager=new PrefManager(getActivity());
+
+        for(int i=1;i<=manager.getReqQ();i++){
+
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
