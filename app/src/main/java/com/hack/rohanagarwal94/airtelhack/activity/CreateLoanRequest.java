@@ -179,9 +179,9 @@ public class CreateLoanRequest extends AppCompatActivity {
             String[] nameAndNumber = manager.getNameAndNumber();
             json.put("title", "Loan Request from " + nameAndNumber[1]);
             json.put("body", key);
+            json.put("click_action", "action_tag");
             data.put("key", key);
             data.put("number", nameAndNumber[1]);
-            data.put("click_action", "airtel.hack");
             object.put("notification", json);
             object.put("data", data);
             object.put("to", id);

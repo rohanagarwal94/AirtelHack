@@ -39,7 +39,7 @@
         <activity android:name=".activity.CreateLoanRequest" />
         <activity android:name=".activity.ReceivedRequestActivity">
             <intent-filter>
-                <action android:name="airtel.hack" />
+                <action android:name="action_tag" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
