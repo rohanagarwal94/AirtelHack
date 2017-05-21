@@ -60,6 +60,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             sendNotification(remoteMessage.getData().get("number"), remoteMessage.getData().get("key"));
         }
 
+        PrefManager manager = new PrefManager(this);
+        manager.setReqQ();
+        manager.addKeyNumber(remoteMessage.getData().get("key"), remoteMessage.getData().get("number"));
+
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
