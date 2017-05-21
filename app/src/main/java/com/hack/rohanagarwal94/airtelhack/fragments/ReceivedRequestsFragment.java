@@ -6,18 +6,27 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hack.rohanagarwal94.airtelhack.PrefManager;
 import com.hack.rohanagarwal94.airtelhack.R;
+import com.hack.rohanagarwal94.airtelhack.model.Creditor;
 import com.hack.rohanagarwal94.airtelhack.model.Loan;
 import com.hack.rohanagarwal94.airtelhack.util.PostsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by rohanagarwal94 on 20/5/17.
@@ -31,6 +40,8 @@ public class ReceivedRequestsFragment extends Fragment {
     TextView noSessionsView;
     PostsAdapter tracksListAdapter;
     View windowFrame;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Nullable
     @Override
@@ -44,12 +55,56 @@ public class ReceivedRequestsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
+        loans=new ArrayList<>();
         tracksListAdapter = new PostsAdapter(getActivity(), loans);
         recyclerView.setAdapter(tracksListAdapter);
 
         PrefManager manager=new PrefManager(getActivity());
 
+
         for(int i=1;i<=manager.getReqQ();i++){
+
+            String[] data=manager.getKeyAndNumber(i);
+            database = FirebaseDatabase.getInstance();
+            myRef = database.getReference(data[1]+"/sendLoans/"+data[0]);
+
+            ValueEventListener postListener = new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot data) {
+                    Log.i(TAG,data.toString());
+                        Loan loan=new Loan();
+                        loan.setAmountLeft(Float.parseFloat(data.child("amountLeft").getValue().toString()));
+                        loan.setAmountTotal(Float.parseFloat(data.child("amountTotal").getValue().toString()));
+                        loan.setName(data.child("name").getValue().toString());
+                        loan.setTitle(data.child("title").getValue().toString());
+                        loan.setType(Integer.parseInt(data.child("type").getValue().toString()));
+                        ArrayList<Creditor> creditors=new ArrayList<>();
+                        if(data.hasChild("creditors")){
+                            for(DataSnapshot ds:data.child("creditors").getChildren()){
+                                Creditor creditor=ds.getValue(Creditor.class);
+                                creditors.add(creditor);
+                            }
+                        }
+                        loan.setCreditors(creditors);
+                        loans.add(loan);
+
+                    Log.i(TAG,loans.size()+"+");
+                    tracksListAdapter.notifyDataSetChanged();
+                    if(loans.size()!=0){
+                        handleVisibility();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w(TAG, "onCancelled", databaseError.toException());
+                    // ...
+                }
+            };
+
+            myRef.addListenerForSingleValueEvent(postListener);
 
         }
 
